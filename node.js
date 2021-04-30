@@ -1,33 +1,38 @@
-var request =require("request");
-var getBaseUrl = function(searchStr){
-   return 'https://en.wikipedia.org/w/api.php?action=opensearch&origin=*&namespace=*&search='+searchStr;
+const axios = require("axios")
+var getBaseUrl = function(lang,searchStr){
+   return 'https://'+lang+'.wikipedia.org/w/api.php?action=opensearch&origin=*&namespace=*&search='+encodeURI(searchStr);
 };
 var getWikiUrl =function(node,searchStr){
     var format = node.format || 'json';
     var limit = node.limit || 1;
     var profile = node.profile || 'fuzzy';
-    var url =getBaseUrl(searchStr) +'&limit='+limit+'&format='+format+'&profile='+profile;
-    //console.log(url);
+    var lang = node.lang || 'ko';
+    var url =getBaseUrl(lang,searchStr) +'&limit='+limit+'&format='+format+'&profile='+profile;
+    // node.error(url);
     return url;
 };
-
+var options = {};
 var getWikiResults =function(node,msg){
-    var url = getWikiUrl(node,msg.payload);
-    request.get(url,function(err, res, body) {  
-        msg.payload=body;
-        node.send(msg);
-        //console.log('body----------------\n'+body);
+    axios.get(getWikiUrl(node,msg.payload), options)
+        .then(function(response) {
+            // node.error(response);
+            msg.payload = response.data;
+            node.send(msg);
+        }).catch(function (err){
+            // node.error(err);
+            msg.payload = err;
+            node.send(msg);
     });
-  
 };
 
 module.exports = function(RED) {
-    function WikiSearchNode(config) {
+    function wikipediaNode(config) {
         RED.nodes.createNode(this,config);
         this.name = config.name;
         this.format = config.format;
         this.limit = config.limit;
-        this.profile=config.profile;
+        this.profile = config.profile;
+        this.lang = config.lang;
         var node = this;
         
         node.on('input', function(msg) {
@@ -43,5 +48,5 @@ module.exports = function(RED) {
         });
     }
     
-    RED.nodes.registerType("wikisearch",WikiSearchNode);
+    RED.nodes.registerType("wikipedia",wikipediaNode);
 }

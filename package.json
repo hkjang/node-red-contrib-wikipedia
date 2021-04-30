@@ -1,32 +1,33 @@
 {
-  "name": "node-red-contrib-wikisearch",
-  "version": "1.0.13",
+  "name": "node-red-contrib-wikipedia",
+  "version": "1.0.0",
   "description": "A node which get information from Wiki based on filters provided using Open Search API",
-  "main": "wikisearch.js",
+  "main": "node.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/kedarkamthe/node-red-contrib-wikisearch.git"
+    "url": "https://github.com/hkjang/node-red-contrib-wikipedia.git"
   },
   "keywords": [
     "node-red",
     "opensearch",
+    "wikipedia",
     "mediawiki"
   ],
-  "author": "Kedar Kamthe <kedarkamthe2006@gmail.com> (https://www.kedarkamthe.com)",
+  "author": "hkjang",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/kedarkamthe/node-red-contrib-wikisearch/issues"
+    "url": "https://github.com/hkjang/node-red-contrib-wikipedia/issues"
   },
-  "homepage": "https://github.com/kedarkamthe/node-red-contrib-wikisearch",
+  "homepage": "https://github.com/hkjang/node-red-contrib-wikipedia",
   "dependencies": {
-    "request": "^2.73.0"
+    "axios": "^0.21.1"
   },
   "node-red": {
     "nodes": {
-      "wikisearch": "wikisearch.js"
+      "wikipedia": "node.js"
     }
   }
 }

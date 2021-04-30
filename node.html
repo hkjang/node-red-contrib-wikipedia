@@ -1,0 +1,161 @@
+<script type="text/javascript">
+    RED.nodes.registerType('wikipedia',{
+        category : 'social',
+        color : '#A6BBCF',
+        defaults: {
+            name  : {value:''},
+            limit : {value: 1 , validate: function(lim) {
+                                            var limit = lim||1;
+                                            return (limit<500&&limit!=0)?true:false;
+                                        }
+                   },
+            format :{value : 'json'},
+            profile :{value : 'fuzzy'},
+            lang :{value : 'ko'}
+        },
+        inputs :1,
+        outputs :1,
+        icon : "wiki.png",
+        label : function() {
+            return this.name||"wikipedia";
+        }
+    });
+</script>
+
+<script type="text/x-red" data-template-name="wikipedia">
+    <div class="form-row">
+        <label for="node-input-name">Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+     <div class="form-row">
+        <label for="node-input-format">Output Format</label>
+        <select id="node-input-format">
+          <option value="json">json</option>
+          <option value="jsonfm">jsonfm</option>
+          <option value="xml">xml</option>
+          <option value="xmlfm">xmlfm</option>
+      </select>
+    </div>
+    <div class="form-row">
+     <label for="node-input-limit">Results Limit</label>
+     <input type="text" id="node-input-limit" placeholder=1>
+    </div>
+     <div class="form-row">
+        <label for="node-input-profile">Profile to Use</label>
+        <select id="node-input-profile">
+          <option value="strict">strict</option>
+          <option value="normal">normal</option>
+          <option value="fuzzy" selected>fuzzy</option>
+          <option value="fast-fuzzy">fast-fuzzy</option>
+          <option value="classic">classic</option>
+      </select>
+    </div>
+     <div class="form-row">
+        <label for="node-input-lang">Language</label>
+        <select id="node-input-lang">
+          <option value="en">en</option>
+          <option value="ko" selected>ko</option>
+          <option value="ja">ja</option>
+          <option value="zh">zh</option>
+          <option value="zh-yue">zh-yue</option>
+          <option value="fr">fr</option>
+          <option value="de">de</option>
+          <option value="es">es</option>
+          <option value="pt">pt</option>
+          <option value="it">it</option>
+          <option value="ru">ru</option>
+          <option value="ar">ar</option>
+          <option value="arz">arz</option>
+          <option value="ceb">ceb</option>
+          <option value="sv">sv</option>
+          <option value="vi">vi</option>
+          <option value="th">th</option>
+          <option value="nl">nl</option>
+          <option value="uk">uk</option>
+          <option value="war">war</option>
+          <option value="sk">sk</option>
+          <option value="bn">bn</option>
+          <option value="et">et</option>
+          <option value="hy">hy</option>
+          <option value="la">la</option>
+          <option value="min">min</option>
+          <option value="uz">uz</option>
+          <option value="sl">sl</option>
+          <option value="tt">tt</option>
+          <option value="vo">vo</option>
+          <option value="az">az</option>
+          <option value="ast">ast</option>
+          <option value="be">be</option>
+          <option value="el">el</option>
+          <option value="hi">hi</option>
+          <option value="lv">lv</option>
+          <option value="sr">sr</option>
+          <option value="ca">ca</option>
+          <option value="eo">eo</option>
+          <option value="hr">hr</option>
+          <option value="lt">lt</option>
+          <option value="no">no</option>
+          <option value="kk">kk</option>
+          <option value="sh">sh</option>
+          <option value="tg">tg</option>
+          <option value="my">my</option>
+          <option value="bg">bg</option>
+          <option value="cs">cs</option>
+          <option value="eu">eu</option>
+          <option value="id">id</option>
+          <option value="hu">hu</option>
+          <option value="nn">nn</option>
+          <option value="azb">azb</option>
+          <option value="zh-min-nan">zh-min-nan</option>
+          <option value="cy">cy</option>
+          <option value="fa">fa</option>
+          <option value="he">he</option>
+          <option value="mk">mk</option>
+          <option value="ce">ce</option>
+          <option value="ro">ro</option>
+          <option value="fi">fi</option>
+          <option value="tr">tr</option>
+          <option value="gl">gl</option>
+          <option value="ka">ka</option>
+          <option value="simple">simple</option>
+          <option value="ta">ta</option>
+          <option value="ur">ur</option>
+      </select>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="wikipedia">
+    <p>A simple node that searches the message payload using OpenSearch Wiki API.</p>
+    <h3>Inputs</h3>
+    <dl class="message-properties">
+        <dt>payload
+            <span class="property-type">string</span>
+        </dt>
+        <dd> the payload of the message to search on wiki. </dd>
+    </dl>
+
+ <h3>Outputs</h3>
+     <ol class="node-ports">
+         <li>Standard output
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">json|xml|jsonfm|xmlfm</span></dt>
+                 <dd>the standard output of the command.</dd>
+             </dl>
+         </li>
+         <li>Standard error
+             <dl class="message-properties">
+                 <dt>payload <span class="property-type">string</span></dt>
+                 <dd>the standard error of the command.</dd>
+             </dl>
+         </li>
+     </ol>
+    
+    <h3>Details</h3>
+    <p><code>msg.payload</code> is used as input to search using wiki OpenSearch API.
+    It should always contain a string for which search needs to be done. Base on parameter which are configured for node the output will be returned in user selected format.</p>
+    
+    <h3>References</h3>
+    <ul>
+        <li><a href="https://en.wikipedia.org/w/api.php?action=help&modules=opensearch">Wiki OpenSearch API docs</a> - contains full description of properties <code>limit , format and profile</code></li>
+    </ul>
+</script> 
