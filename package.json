@@ -1,6 +1,6 @@
 {
   "name": "node-red-contrib-wikipedia",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A node which get information from Wiki based on filters provided using Open Search API",
   "main": "node.js",
   "scripts": {
@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/hkjang/node-red-contrib-wikipedia",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.26.1"
   },
   "node-red": {
     "nodes": {
